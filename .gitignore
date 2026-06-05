@@ -1,0 +1,9 @@
+# Typeform export (radni fajlovi — ne treba na GitHub)
+_typeform_raw.json
+_typeform_theme.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.claude/
+node_modules/

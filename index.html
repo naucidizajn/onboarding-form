@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex" />
+  <title>Upitnik za nove studente</title>
+
+  <!-- intl-tel-input v23 (telefon: dropdown + search + zastave + validacija) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/css/intlTelInput.min.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Progress bar (Typeform "proportion" stil) -->
+  <div id="progress" class="progress"><div id="progress-fill" class="progress__fill"></div></div>
+
+  <!-- Sve "slide-ove" (welcome / pitanja / thank-you) generiše form.js -->
+  <main id="app" class="app" aria-live="polite"></main>
+
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/js/intlTelInput.min.js"></script>
+  <script src="form.js"></script>
+</body>
+</html>

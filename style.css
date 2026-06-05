@@ -1,0 +1,346 @@
+/* ============================================================
+   Tema (izvučena 1:1 sa Typeform-a — "Nauči Dizajn")
+   ============================================================ */
+:root {
+  --bg:            #232421; /* pozadina */
+  --question:      #FFFFFF; /* tekst pitanja */
+  --accent:        #DBFF00; /* dugmad / akcent / tekst u inputima */
+  --accent-ink:    #181818; /* tekst na dugmetu */
+  --muted:         rgba(255, 255, 255, 0.55);
+  --line:          rgba(219, 255, 0, 0.45);
+  --choice-bg:     #2E321F; /* pozadina radio dugmadi */
+  --error:         #ff6b6b;
+  --radius:        8px;
+  --font: Arial, Helvetica, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--question);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ---------- Progress bar ---------- */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 50;
+}
+.progress__fill {
+  height: 100%; width: 0%;
+  background: var(--accent);
+  transition: width 0.35s ease;
+}
+
+/* ---------- Slide kontejner (CENTRIRANO) ---------- */
+.app { position: relative; height: 100%; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px clamp(20px, 6vw, 80px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(26px);
+  transition: opacity 0.4s cubic-bezier(.22,.61,.36,1),
+              transform 0.4s cubic-bezier(.22,.61,.36,1),
+              visibility 0s linear 0.4s;
+  overflow-y: auto;
+}
+.slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.4s cubic-bezier(.22,.61,.36,1),
+              transform 0.4s cubic-bezier(.22,.61,.36,1);
+}
+.slide.is-past { transform: translateY(-26px); }
+
+.slide__inner {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+}
+
+/* ---------- Welcome / Thank-you ---------- */
+.slide--screen { padding-left: 40px; padding-right: 40px; }
+.slide--screen .slide__inner { text-align: center; max-width: 1200px; }
+
+.screen-title {
+  font-size: 26px;          /* isto kao original Typeform welcome/end */
+  font-weight: 400;
+  line-height: 1.35;
+}
+.screen-desc {
+  margin-top: 14px;
+  font-size: 18px;
+  color: #d3d3d3;
+  line-height: 1.5;
+}
+.screen-time {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 15px;
+}
+.screen-time svg { width: 16px; height: 16px; }
+
+/* ---------- Pitanje: broj U RAVNI sa pitanjem ---------- */
+:root { --num-w: 30px; --num-gap: 12px; }
+.q-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--num-gap);
+}
+.q-number {
+  flex: 0 0 var(--num-w);
+  width: var(--num-w);
+  text-align: center;
+  margin-top: 6px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 0;
+  border-radius: 5px;
+  line-height: 1.2;
+}
+.q-title {
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--question);
+}
+.q-title .req { color: var(--accent); margin-left: 4px; }
+
+/* Paragraf poravnat sa POČETKOM TEKSTA naslova (ne sa brojem) */
+.q-desc {
+  margin-top: 12px;
+  margin-left: calc(var(--num-w) + var(--num-gap));
+  font-size: 18px;
+  color: #d3d3d3;
+  line-height: 1.45;
+}
+
+/* Sve ostalo (input, radio, datum, dugmad, greška) u istoj liniji sa naslovom */
+.field,
+.choices,
+.error-msg,
+.actions { margin-left: calc(var(--num-w) + var(--num-gap)); }
+.actions--center { margin-left: 0; }   /* welcome ostaje centriran */
+
+/* ---------- Tekstualni inputi (TEKST = ACCENT) ---------- */
+.field { margin-top: 22px; }
+
+.text-input,
+.text-area {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--line);
+  color: var(--accent);              /* upisani tekst = akcenat */
+  font-family: var(--font);
+  font-size: clamp(20px, 2.6vw, 26px);
+  padding: 8px 0;                    /* tekst kreće od početka inputa */
+  caret-color: var(--accent);
+}
+.text-input::placeholder,
+.text-area::placeholder { color: rgba(255, 255, 255, 0.28); }
+.text-input:focus,
+.text-area:focus { outline: none; border-bottom-color: var(--accent); }
+.text-area { resize: none; min-height: 48px; line-height: 1.4; overflow: hidden; }
+
+/* ---------- Datum rođenja (MM / DD / YYYY) ---------- */
+.date-field { display: flex; align-items: flex-end; gap: 14px; }
+.date-part { display: flex; flex-direction: column; }
+.date-part label {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.date-part .text-input { width: 78px; text-align: left; }
+.date-part--year .text-input { width: 120px; }
+.date-sep { color: var(--muted); font-size: 26px; padding-bottom: 8px; }
+
+/* ---------- Multiple choice (radio) ---------- */
+.choices { margin-top: 22px; display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: var(--choice-bg);
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-family: var(--font);
+  font-size: clamp(17px, 2.1vw, 20px);
+  padding: 15px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.choice:hover { border-color: rgba(219, 255, 0, 0.5); }
+.choice.is-selected { border-color: var(--accent); background: var(--choice-bg); }
+.choice__key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+/* ---------- Dugmad / akcije (manja gornja margina) ---------- */
+.actions { margin-top: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.actions--center { margin-top: 26px; justify-content: center; }
+
+.btn {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 17px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.05s ease, background 0.15s ease;
+}
+.btn:hover { filter: brightness(0.92); }
+.btn:active { transform: translateY(1px); }
+.btn--big { font-size: 19px; padding: 14px 30px; }
+
+.btn:disabled,
+.btn.is-disabled {
+  background: rgba(219, 255, 0, 0.22);
+  color: rgba(24, 24, 24, 0.45);
+  cursor: default;
+  filter: none;
+  transform: none;
+}
+
+.btn--back {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--question);
+  padding: 12px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn--back:hover { background: rgba(255, 255, 255, 0.16); filter: none; }
+.btn--back svg { width: 18px; height: 18px; }
+
+.btn--skip {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  color: var(--question);
+  margin-left: auto;
+  font-weight: 600;
+}
+.btn--skip:hover { background: rgba(255, 255, 255, 0.08); filter: none; }
+
+.enter-hint { color: var(--muted); font-size: 14px; }
+.enter-hint kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: var(--font);
+}
+
+.error-msg {
+  margin-top: 12px;
+  color: var(--error);
+  font-size: 15px;
+  min-height: 18px;
+}
+
+/* ============================================================
+   intl-tel-input v23 — dark "Nauči Dizajn" stil
+   ============================================================ */
+.field .iti { width: 100%; }
+/* SAMO telefon dobija levi razmak (za zastavu + odvojen placeholder) */
+.field .iti input.text-input { padding-left: 74px; }
+
+/* Zastava na inputu — 28x20 hi-res slika (oštra, bez skaliranja sprite-a) */
+.iti__selected-country .iti__flag {
+  width: 28px !important;
+  height: 20px !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: 2px;
+}
+.iti__selected-country { background: transparent !important; padding-left: 2px; }
+.iti__selected-country:hover { background: rgba(255, 255, 255, 0.05) !important; }
+.iti__arrow { border-top-color: var(--accent); margin-left: 12px; }
+.iti__arrow--up { border-top-color: transparent; border-bottom-color: var(--accent); }
+
+/* Panel */
+.iti__dropdown-content {
+  background: var(--bg) !important;
+  border: 1.5px solid var(--accent) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+  padding: 6px;
+}
+
+/* Search — isti stil kao kartice opcija + veći gornji/levi/desni razmak */
+.iti__search-input {
+  background: #383D26 !important;        /* malo svetlije od opcija da se izdvoji */
+  border: 1.5px solid rgba(219, 255, 0, 0.28) !important;
+  border-radius: var(--radius) !important;
+  color: var(--accent) !important;
+  font-family: var(--font) !important;
+  font-size: 16px !important;
+  padding: 15px 16px !important;
+  margin: 12px 28px 10px 8px !important; /* levo 8, desno 28 — poravnato s opcijama, dalje od scrollbar-a */
+  width: calc(100% - 36px) !important;
+  box-sizing: border-box !important;
+  display: block;
+}
+.iti__search-input::placeholder { color: var(--muted) !important; }
+.iti__search-input:focus { outline: none; border-color: var(--accent) !important; }
+
+/* Lista + kartice */
+.iti__country-list { padding: 0 2px; scrollbar-color: var(--accent) transparent; }
+.iti__country-list::-webkit-scrollbar { width: 8px; }
+.iti__country-list::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 8px; }
+.iti__country {
+  background: var(--choice-bg) !important;
+  border: 1.5px solid rgba(219, 255, 0, 0.22) !important;
+  border-radius: var(--radius) !important;
+  margin: 7px 10px 7px 8px !important;   /* desno 10 + scrollbar 8 = poravnato sa search-om, dalje od scrollbar-a */
+  padding: 12px 14px !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.iti__country.iti__highlight,
+.iti__country:hover { border-color: var(--accent) !important; background: var(--choice-bg) !important; }
+.iti__country-name { color: var(--accent) !important; }
+.iti__dial-code { color: var(--accent) !important; margin-left: auto; }
+.iti__country .iti__flag { margin: 0 6px; }
+
+@media (max-width: 600px) {
+  .slide { padding: 56px 22px 80px; align-items: center; }
+  .date-part .text-input { width: 64px; }
+  .date-part--year .text-input { width: 96px; }
+}
