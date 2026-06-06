@@ -395,12 +395,18 @@ document.addEventListener("keydown", (e) => {
    Slanje na webhook
    ============================================================ */
 async function submitForm() {
+  // Ravan objekat sa imenovanim poljima (lako za mapiranje u Make-u):
+  // data.ime, data.prezime, data.email, data.telefon, data.pol, ...
+  const data = {};
+  QUESTIONS.forEach(q => { data[q.ref] = answers[q.ref] || ""; });
+
   const payload = {
     form: "Upitnik za nove studente",
     form_id: "AGLMXbqN",
     submitted_at: new Date().toISOString(),
     hidden: getHidden(),
-    answers: QUESTIONS.map(q => ({
+    data,                                  // ← koristi OVO za mapiranje (data.ime, data.email...)
+    answers: QUESTIONS.map(q => ({         // niz ostaje (za iteraciju ako zatreba)
       ref: q.ref,
       question: q.title,
       type: q.type,
