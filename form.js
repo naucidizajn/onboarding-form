@@ -50,7 +50,7 @@ const WELCOME = {
   title: "Da otključaš svoj kurs samo odgovori na ovih par pitanja 😊",
   desc:  "Odmah nakon završetka ankete na mejl će ti stići pristup kursu",
   button: "Start",
-  time:  "Takes X minutes",   // promeni X po želji (npr. "Takes 2 minutes")
+  time:  "Traje 2 minuta",   // procena trajanja na welcome ekranu
 };
 
 const THANKYOU = {
