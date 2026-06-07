@@ -1,6 +1,8 @@
 # Typeform export (radni fajlovi — ne treba na GitHub)
 _typeform_raw.json
 _typeform_theme.json
+_referenca-kviz.css
+_responses.json
 
 # OS / editor
 .DS_Store

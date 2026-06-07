@@ -194,18 +194,27 @@ html, body {
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 .choice:hover { border-color: rgba(219, 255, 0, 0.5); }
-.choice.is-selected { border-color: var(--accent); background: var(--choice-bg); }
+.choice.is-selected { border-color: var(--accent); background: #222421; }
+/* Badge: normalno outline (tamno + maslinasti border), žut tek kad je izabran */
 .choice__key {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px; height: 26px;
-  background: var(--accent);
-  color: var(--accent-ink);
+  min-width: 26px; height: 26px;
+  padding: 0 6px;
+  background: #2F321F;
+  color: var(--accent);
+  box-shadow: #586317 0 0 0 1px;
   border-radius: 5px;
   font-size: 13px;
   font-weight: 700;
   flex: 0 0 auto;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.choice.is-selected .choice__key {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--accent) 0 0 0 1px;
 }
 
 /* ---------- Dugmad / akcije (manja gornja margina) ---------- */
@@ -339,8 +348,19 @@ html, body {
 .iti__dial-code { color: var(--accent) !important; margin-left: auto; }
 .iti__country .iti__flag { margin: 0 6px; }
 
-@media (max-width: 600px) {
-  .slide { padding: 56px 22px 80px; align-items: center; }
+@media (max-width: 640px) {
+  .slide { padding: 48px 18px 64px; align-items: center; }
+
+  /* Manji fontovi na mobilnom (kao Quiz forma) */
+  .q-title { font-size: 20px; line-height: 26px; }
+  .screen-title { font-size: 22px; line-height: 28px; }
+  .screen-desc { font-size: 16px; }
+  .text-input, .text-area { font-size: 18px; }
+  .choice { font-size: 16px; }
+
+  /* Bez uvlačenja na mobilnom — sadržaj ide do leve ivice */
+  .q-desc, .field, .choices, .error-msg, .actions { margin-left: 0; }
+
   .date-part .text-input { width: 64px; }
   .date-part--year .text-input { width: 96px; }
 }
