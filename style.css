@@ -353,6 +353,7 @@ html, body {
 
   /* Manji fontovi na mobilnom (kao Quiz forma) */
   .q-title { font-size: 20px; line-height: 26px; }
+  .q-number { margin-top: 1px; }   /* poravnaj broj sa tekstom naslova (20px) */
   .screen-title { font-size: 22px; line-height: 28px; }
   .screen-desc { font-size: 16px; }
   .text-input, .text-area { font-size: 18px; }
